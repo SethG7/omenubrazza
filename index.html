@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>O Menu Restaurant — Brazzaville</title>
+
+<!-- Google Analytics GA4 — compte nkolaguni@gmail.com -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer=window.dataLayer||[];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());
+  gtag('config','G-XXXXXXXXXX',{
+    'send_page_view':true,
+    'cookie_flags':'SameSite=None;Secure'
+  });
+
+  /* Tracker centralisé — tous les événements passent par ici */
+  function track(event_name,params){
+    gtag('event',event_name,Object.assign({'event_category':'engagement'},params||{}));
+  }
+</script>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Montserrat',sans-serif;background:#111010;color:#FAF6F0;overflow-x:hidden;}
+
+:root{
+  --or:#E8621A;
+  --or2:rgba(232,98,26,.10);
+  --orbrd:rgba(232,98,26,.28);
+  --bg:#000000;       /* Noir pur pour header et footer */
+  --dark:#111010;     /* Fond corps */
+  --card:#1a1714;
+  --card2:#201d18;
+  --brd:#2a2520;
+  --gray:#7a7068;
+  --lgray:#4a4540;
+  --cream:#FAF6F0;
+  --green:#25D366;
+  --nav-h:46px;
+  --gap:14px;
+  --mw:780px;
+}
+
+/* ══ HEADER — fond noir pur ══ */
+.site-header{
+  background:var(--bg);
+  border-bottom:1px solid var(--brd);
+  padding:52px 20px 48px;
+  text-align:center;
+  position:relative;overflow:hidden;
+}
+.site-header::before{
+  content:'';position:absolute;top:-80px;left:50%;transform:translateX(-50%);
+  width:500px;height:500px;
+  background:radial-gradient(circle,rgba(232,98,26,.07) 0%,transparent 65%);
+  pointer-events:none;
+}
+
+/* Logo — agrandi, bien visible */
+.h-logo{
+  position:relative;z-index:1;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:24px;
+}
+.h-logo img{
+  height:auto;
+  width:min(90vw,520px);
+  max-width:520px;
+  object-fit:contain;
+}
+
+.h-tag{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--lgray);position:relative;z-index:1;}
+.h-sep{width:36px;height:1px;background:var(--brd);margin:20px auto;position:relative;z-index:1;}
+.h-intro{
+  max-width:520px;margin:0 auto 28px;
+  font-size:14px;font-weight:500;line-height:1.9;
+  color:var(--cream);position:relative;z-index:1;
+}
+.h-intro strong{color:var(--or);font-weight:700;}
+.h-cta{display:flex;flex-direction:column;align-items:center;gap:12px;position:relative;z-index:1;}
+.cta-push{font-size:11px;font-weight:500;color:var(--gray);margin-top:10px;}
+.cta-push span{color:var(--or);}
+
+/* ══ BOUTON COMMANDER (orange) ══ */
+.btn-cmd{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  background:var(--or);color:#fff;
+  font-family:'Montserrat',sans-serif;font-weight:900;font-size:15px;letter-spacing:.5px;
+  padding:15px 36px;border-radius:60px;border:none;cursor:pointer;
+  position:relative;overflow:hidden;
+  width:100%;max-width:300px;
+  animation:or-pulse 2.4s ease-in-out infinite;
+  transition:transform .2s;
+}
+.btn-cmd::before{content:'';position:absolute;top:-50%;left:-80%;width:55%;height:200%;background:linear-gradient(105deg,transparent 28%,rgba(255,255,255,.5) 50%,transparent 72%);transform:skewX(-15deg);animation:shine 2.4s ease-in-out infinite;pointer-events:none;}
+@keyframes or-pulse{0%,100%{box-shadow:0 4px 18px rgba(232,98,26,.42),0 0 0 0 rgba(232,98,26,.32);}50%{box-shadow:0 6px 32px rgba(232,98,26,.65),0 0 0 12px rgba(232,98,26,0);}}
+@keyframes shine{0%{left:-80%;opacity:0;}25%{opacity:1;}55%{left:120%;opacity:0;}100%{left:120%;opacity:0;}}
+.btn-cmd:hover{transform:translateY(-2px);}
+.btn-cmd>*{position:relative;z-index:1;}
+.btn-cmd svg{width:19px;height:19px;flex-shrink:0;}
+
+/* ══ BOUTON WHATSAPP ══ */
+.btn-wa{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  background:transparent;color:var(--green);
+  font-family:'Montserrat',sans-serif;font-weight:600;font-size:12px;
+  padding:10px 22px;border-radius:60px;border:1.5px solid var(--green);
+  text-decoration:none;cursor:pointer;
+  transition:background .2s,color .2s;
+  width:100%;max-width:300px;
+}
+.btn-wa:hover{background:var(--green);color:#fff;}
+.btn-wa svg{width:16px;height:16px;fill:currentColor;flex-shrink:0;}
+
+/* ══ NAV ══ */
+.site-nav{
+  position:sticky;top:0;z-index:500;
+  background:var(--dark);border-bottom:1px solid var(--brd);
+  display:flex;overflow-x:auto;scrollbar-width:none;height:var(--nav-h);
+}
+.site-nav::-webkit-scrollbar{display:none;}
+.site-nav a{
+  flex-shrink:0;display:flex;align-items:center;
+  padding:0 14px;
+  font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--gray);text-decoration:none;white-space:nowrap;
+  border-bottom:2px solid transparent;transition:color .2s,border-color .2s;
+}
+.site-nav a:hover{color:var(--cream);}
+.site-nav a.active{color:var(--or);border-bottom-color:var(--or);}
+
+/* ══ ILLUSTRATIONS ══ */
+.illus-wrap{
+  width:100%;height:280px;overflow:hidden;
+  position:relative;background:var(--card);border-bottom:1px solid var(--brd);
+}
+/* object-position:center 15% pour montrer les visages/yeux */
+.illus-wrap img{
+  width:100%;height:100%;object-fit:cover;
+  object-position:center 15%;
+  filter:brightness(.82);display:block;transition:transform .4s ease;
+}
+.illus-wrap:hover img{transform:scale(1.02);}
+.illus-caption{
+  position:absolute;bottom:12px;left:50%;transform:translateX(-50%);
+  background:rgba(0,0,0,.88);backdrop-filter:blur(8px);
+  border:1px solid var(--brd);border-radius:30px;
+  padding:8px 18px;
+  font-size:clamp(9px,2.2vw,11px);font-weight:600;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--cream);
+  white-space:nowrap;
+  max-width:calc(100% - 32px);
+  text-align:center;
+}
+.illus-caption span{color:var(--or);}
+
+/* ══ MAIN ══ */
+.site-main{max-width:var(--mw);margin:0 auto;padding:0 16px 60px;}
+.menu-section{padding-top:56px;}
+
+/* Section header */
+.sec-hd{display:flex;flex-direction:column;align-items:center;gap:6px;margin-bottom:28px;text-align:center;}
+.sec-hd-row{display:flex;align-items:center;gap:14px;width:100%;}
+.sec-hd h2{font-size:19px;font-weight:900;text-transform:uppercase;letter-spacing:1.5px;color:#fff;white-space:nowrap;}
+.sec-hd .dot{width:6px;height:6px;border-radius:50%;background:var(--or);flex-shrink:0;}
+.sec-hd .ln{flex:1;height:1px;background:var(--brd);}
+.sec-hd .sec-sub{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gray);font-weight:600;}
+
+.sub-lbl{font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;margin:20px 0 14px;}
+.sub-lbl.white{color:#fff;}
+.sub-lbl.accent{color:var(--or);}
+.sub-lbl.gray{color:var(--gray);}
+
+/* ══ GRILLE 2 COL ══ */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--gap);}
+@media(max-width:440px){.grid{grid-template-columns:1fr;}}
+
+.card{background:var(--card2);border:1px solid var(--brd);border-radius:12px;padding:18px;transition:border-color .2s,transform .15s;}
+.card:hover{border-color:var(--lgray);transform:translateY(-1px);}
+.card .nm{font-size:13px;font-weight:600;color:var(--cream);line-height:1.35;margin-bottom:6px;}
+.card .ds{font-size:11px;color:var(--gray);line-height:1.6;margin-bottom:10px;font-weight:400;}
+.card .pr{font-size:15px;font-weight:700;color:var(--or);}
+.card.wide{grid-column:span 2;}
+@media(max-width:440px){.card.wide{grid-column:span 1;}}
+.card.sig{grid-column:span 2;background:var(--card);border:1px solid rgba(232,98,26,.28);border-left:3px solid var(--or);padding:18px 18px 18px 22px;}
+@media(max-width:440px){.card.sig{grid-column:span 1;}}
+.card.sig .nm{font-size:15px;color:#fff;}
+.card.sig .pr{font-size:16px;}
+
+/* ══ INCONTOURNABLES ══ */
+.inco-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--gap);}
+@media(max-width:440px){.inco-grid{grid-template-columns:1fr;}}
+
+/* Titre de groupe — pleine largeur */
+.inco-group{
+  grid-column:span 2;
+  display:flex;align-items:center;gap:12px;
+  margin-top:28px;margin-bottom:2px;
+}
+.inco-group:first-child{margin-top:0;}
+@media(max-width:440px){.inco-group{grid-column:span 1;}}
+.ig-dot{width:6px;height:6px;border-radius:50%;background:var(--or);flex-shrink:0;}
+.ig-title{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--or);white-space:nowrap;}
+.ig-line{flex:1;height:1px;background:var(--brd);}
+
+/* Carte incontournable */
+.ic{
+  background:linear-gradient(145deg,#1d1308 0%,#261809 100%);
+  border:1px solid rgba(232,98,26,.20);
+  border-top:2px solid var(--or);
+  border-radius:12px;padding:16px;
+  display:flex;flex-direction:column;gap:7px;
+  transition:border-color .2s,transform .2s,box-shadow .2s;
+}
+.ic:hover{border-color:rgba(232,98,26,.48);transform:translateY(-2px);box-shadow:0 8px 22px rgba(232,98,26,.14);}
+.ic.full{grid-column:span 2;}
+@media(max-width:440px){.ic.full{grid-column:span 1;}}
+.ic .ic-badge{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--or);}
+.ic .ic-name{font-size:14px;font-weight:700;color:#fff;line-height:1.3;}
+.ic .ic-desc{font-size:11px;color:var(--gray);font-weight:400;line-height:1.55;}
+.ic .ic-price{font-size:16px;font-weight:700;color:var(--or);margin-top:auto;}
+.ic.combo{background:linear-gradient(145deg,#171006 0%,#1e1408 100%);border-color:rgba(232,98,26,.32);border-top-color:var(--or);}
+.ic.combo .ic-name{color:var(--or);}
+.ic.combo .ic-price{color:#fff;font-size:14px;}
+
+/* ══ PROMOS ══ */
+.promo-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--gap);}
+@media(max-width:480px){.promo-grid{grid-template-columns:1fr;}}
+.promo-card{background:linear-gradient(135deg,#1a1008 0%,#221508 100%);border:1px solid rgba(232,98,26,.2);border-radius:14px;padding:20px;position:relative;overflow:hidden;}
+.promo-card::before{content:'';position:absolute;top:-15px;right:-15px;width:60px;height:60px;border-radius:50%;background:rgba(232,98,26,.07);}
+.promo-card .p-days{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--or);margin-bottom:8px;}
+.promo-card .p-title{font-size:15px;font-weight:900;color:#fff;line-height:1.3;margin-bottom:8px;}
+.promo-card .p-desc{font-size:12px;color:rgba(250,246,240,.82);line-height:1.65;font-weight:400;}
+.promo-card.full{grid-column:span 2;}
+@media(max-width:480px){.promo-card.full{grid-column:span 1;}}
+.fid-card{background:linear-gradient(135deg,#100e1c 0%,#181530 100%);border:1px solid rgba(120,80,220,.25);border-radius:14px;padding:24px;text-align:center;}
+.fid-icon{font-size:38px;margin-bottom:12px;}
+.fid-title{font-size:17px;font-weight:900;color:#fff;margin-bottom:12px;}
+.fid-desc{font-size:13px;font-weight:500;color:#fff;line-height:1.8;}
+.fid-desc strong{color:var(--or);}
+
+/* Badge */
+.bdg{display:inline-block;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 9px;border-radius:4px;margin-bottom:10px;}
+.bdg.or{background:var(--or);color:#fff;}
+.bdg.dk{background:var(--brd);color:var(--gray);}
+.bdg.ol{border:1px solid var(--or);color:var(--or);background:transparent;}
+.bdg.hot{background:linear-gradient(90deg,#E8621A,#ff8a00);color:#fff;}
+
+/* Simple list */
+.slist{display:flex;flex-direction:column;gap:10px;}
+.srow{display:flex;justify-content:space-between;align-items:center;padding:13px 18px;gap:12px;background:var(--card2);border:1px solid var(--brd);border-radius:10px;transition:border-color .2s;}
+.srow:hover{border-color:var(--lgray);}
+.srow .nm{font-size:13px;font-weight:400;color:var(--cream);}
+.srow .pr{font-size:13px;font-weight:600;color:var(--or);white-space:nowrap;}
+
+/* ══ ZONE CTA — après pack, avant footer ══ */
+.cta-zone{
+  background:var(--bg);
+  border-top:1px solid var(--brd);border-bottom:1px solid var(--brd);
+  padding:44px 20px;
+  text-align:center;
+  margin-top:60px;
+}
+.cta-zone .cz-inner{max-width:var(--mw);margin:0 auto;}
+.cta-zone .cz-title{font-size:20px;font-weight:900;color:var(--cream);margin-bottom:8px;}
+.cta-zone .cz-sub{font-size:13px;font-weight:500;color:#fff;margin-bottom:26px;line-height:1.6;}
+.cta-zone .cz-btns{display:flex;flex-direction:column;align-items:center;gap:12px;}
+.cta-zone .cz-push{font-size:11px;color:var(--gray);margin-top:14px;}
+.cta-zone .cz-push span{color:var(--or);}
+
+/* ══ PANIER FAB ══ */
+.cart-fab{
+  position:fixed;bottom:22px;right:22px;z-index:1000;
+  background:var(--or);color:#fff;
+  width:62px;height:62px;border-radius:50%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  cursor:pointer;border:none;gap:2px;
+  animation:or-pulse-strong 2s ease-in-out infinite;
+  transition:transform .2s;
+}
+@keyframes or-pulse-strong{
+  0%,100%{box-shadow:0 4px 18px rgba(232,98,26,.6),0 0 0 0 rgba(232,98,26,.5),0 0 28px rgba(232,98,26,.35);}
+  50%{box-shadow:0 6px 36px rgba(232,98,26,.85),0 0 0 14px rgba(232,98,26,0),0 0 48px rgba(232,98,26,.5);}
+}
+.cart-fab:hover{transform:scale(1.12);}
+.cart-fab .fab-icon{font-size:20px;line-height:1;}
+.cart-fab .fab-label{font-size:8px;font-weight:900;letter-spacing:.5px;text-transform:uppercase;color:#fff;line-height:1;}
+.cart-count{position:absolute;top:-4px;right:-4px;background:#fff;color:var(--or);font-size:10px;font-weight:900;width:20px;height:20px;border-radius:50%;display:none;align-items:center;justify-content:center;}
+.cart-count.show{display:flex;}
+
+/* ══ MODAL ══ */
+.modal-overlay{display:none;position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.85);backdrop-filter:blur(5px);align-items:flex-end;justify-content:center;}
+.modal-overlay.open{display:flex;}
+.modal-box{background:var(--card);border-top:2px solid var(--or);border-radius:20px 20px 0 0;width:100%;max-width:580px;padding:28px 20px 36px;max-height:93vh;overflow-y:auto;}
+.modal-hd{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
+.modal-box h3{font-size:17px;font-weight:900;text-transform:uppercase;letter-spacing:1px;color:var(--cream);}
+.modal-box .msub{font-size:12px;color:var(--gray);margin-bottom:18px;}
+.modal-close{background:none;border:none;color:var(--gray);font-size:24px;cursor:pointer;line-height:1;}
+.push-box{background:var(--or2);border:1px solid var(--orbrd);border-radius:9px;padding:12px 16px;font-size:12px;font-weight:600;color:var(--cream);text-align:center;line-height:1.55;margin-bottom:18px;}
+.push-box span{color:var(--or);}
+.cart-form{display:flex;flex-direction:column;gap:14px;}
+.c-lbl{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray);margin-bottom:5px;display:block;}
+.c-lbl .req{color:var(--or);}
+.c-sel,.c-inp{background:var(--card2);border:1px solid var(--brd);color:var(--cream);font-family:'Montserrat',sans-serif;font-size:13px;font-weight:500;padding:13px 15px;border-radius:10px;width:100%;transition:border-color .2s;}
+.c-sel{appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath fill='%237a7068' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;}
+.c-sel:focus,.c-inp:focus{outline:none;border-color:var(--or);}
+.c-sel.error,.c-inp.error{border-color:#ff4444;}
+.c-inp{cursor:text;}
+.qty-row{display:flex;align-items:center;gap:10px;}
+.qty-btn{background:var(--card2);border:1px solid var(--brd);color:var(--cream);width:40px;height:40px;border-radius:10px;font-size:20px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:border-color .2s;flex-shrink:0;}
+.qty-btn:hover{border-color:var(--or);}
+.qty-val{font-size:16px;font-weight:700;color:var(--cream);min-width:28px;text-align:center;}
+.add-btn{flex:1;padding:13px 16px;border-radius:10px;border:none;background:var(--or);color:#fff;font-family:'Montserrat',sans-serif;font-weight:700;font-size:12px;cursor:pointer;transition:background .2s;white-space:nowrap;}
+.add-btn:hover{background:#c05010;}
+.c-items{display:flex;flex-direction:column;gap:8px;min-height:30px;}
+.ci{display:flex;justify-content:space-between;align-items:center;background:var(--card2);border:1px solid var(--brd);border-radius:9px;padding:11px 15px;gap:8px;}
+.ci .ci-n{font-size:12px;font-weight:600;color:var(--cream);flex:1;}
+.ci .ci-p{font-size:12px;font-weight:700;color:var(--or);white-space:nowrap;}
+.ci .ci-rm{background:none;border:none;color:var(--lgray);cursor:pointer;font-size:16px;padding:0 4px;}
+.ci .ci-rm:hover{color:#ff6060;}
+.empty-msg{text-align:center;color:var(--gray);font-size:12px;padding:14px 0;font-style:italic;}
+.c-total{font-size:15px;font-weight:700;color:var(--cream);text-align:right;padding:10px 0;border-top:1px solid var(--brd);}
+.c-total span{color:var(--or);}
+.c-total .li{font-size:11px;color:var(--gray);font-weight:400;display:block;margin-top:3px;}
+.c-total .tot{font-size:16px;color:var(--or);display:block;margin-top:4px;}
+.c-total .red{font-size:11px;color:#4caf50;font-weight:500;display:block;margin-top:2px;}
+.err-msg{font-size:11px;color:#ff4444;margin-top:4px;display:none;}
+.submit-btn{width:100%;padding:16px;border-radius:60px;border:none;background:var(--green);color:#fff;font-family:'Montserrat',sans-serif;font-weight:900;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:transform .2s,box-shadow .2s;box-shadow:0 4px 16px rgba(37,211,102,.28);position:relative;overflow:hidden;}
+.submit-btn::before{content:'';position:absolute;top:-50%;left:-80%;width:55%;height:200%;background:linear-gradient(105deg,transparent 28%,rgba(255,255,255,.38) 50%,transparent 72%);transform:skewX(-15deg);animation:shine 2.8s ease-in-out infinite;}
+.submit-btn:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(37,211,102,.4);}
+.submit-btn>*{position:relative;z-index:1;}
+.submit-btn svg{width:20px;height:20px;fill:#fff;}
+
+/* ══ FOOTER — fond noir pur ══ */
+.site-footer{background:var(--bg);border-top:1px solid var(--brd);padding:60px 16px 48px;text-align:center;}
+.ft-inner{max-width:var(--mw);margin:0 auto;}
+
+/* Logo footer — agrandi, bien visible */
+.ft-logo{display:flex;align-items:center;justify-content:center;margin-bottom:10px;}
+.ft-logo img{
+  height:auto;
+  width:min(85vw,440px);
+  max-width:440px;object-fit:contain;
+}
+.ft-sub{font-size:10px;letter-spacing:3.5px;text-transform:uppercase;color:var(--lgray);margin-bottom:28px;}
+.ft-sep{width:40px;height:1px;background:var(--brd);margin:0 auto 28px;}
+
+/* Vision — tout en blanc */
+.ft-vision{max-width:500px;margin:0 auto 40px;padding:24px 12px;border-top:1px solid var(--brd);border-bottom:1px solid var(--brd);}
+.ft-s1{font-size:17px;font-weight:700;color:#fff;margin-bottom:4px;}
+/* Le Goût. Le Sourire. Le Moment. — la signature émotionnelle d'O Menu */
+.ft-s2{font-size:12px;font-weight:600;color:var(--or);letter-spacing:1.5px;margin-bottom:18px;}
+.ft-vp{font-size:13px;font-weight:500;color:#fff;line-height:1.82;margin-bottom:8px;}
+.ft-vp2{font-size:12px;font-weight:400;color:#fff;line-height:1.8;margin-top:12px;}
+
+/* Infos 3 col — titres orange, tout le texte blanc */
+.ft-info{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:var(--brd);
+  border:1px solid var(--brd);border-radius:12px;overflow:hidden;
+  margin:0 auto 36px;text-align:left;
+}
+@media(max-width:560px){.ft-info{grid-template-columns:1fr;}}
+.ft-col{background:var(--bg);padding:22px 18px;}
+.ft-col .ci-icon{font-size:20px;margin-bottom:10px;display:block;}
+.ft-col .ct{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--or);margin-bottom:11px;display:block;}
+.ft-col p{font-size:12px;font-weight:500;color:#fff;line-height:1.85;}
+.ft-col a{color:#fff;text-decoration:none;font-weight:600;}
+.ft-col a:hover{color:var(--or);}
+/* ref adresse — blanc */
+.ft-col .ref{font-size:11px;color:#fff;margin-top:5px;display:block;}
+.ft-col .badge-l{display:inline-block;margin-top:10px;background:var(--or2);border:1px solid var(--or);border-radius:5px;padding:5px 11px;font-size:11px;font-weight:700;color:var(--or);}
+
+/* Réseaux sociaux */
+.ft-socials{display:flex;justify-content:center;gap:12px;margin-bottom:36px;flex-wrap:wrap;}
+.ft-soc{display:flex;align-items:center;gap:8px;background:var(--dark);border:1px solid var(--brd);border-radius:9px;padding:10px 18px;text-decoration:none;font-size:12px;font-weight:600;color:var(--gray);transition:border-color .2s,color .2s;}
+.ft-soc:hover{border-color:var(--or);color:var(--or);}
+.ft-soc svg{width:18px;height:18px;fill:currentColor;flex-shrink:0;}
+
+/* Bloc commander footer */
+.ft-action{background:var(--dark);border:1px solid var(--brd);border-radius:14px;padding:28px 20px;margin:0 auto 32px;max-width:480px;}
+.ft-action .at{font-size:17px;font-weight:900;color:var(--cream);margin-bottom:8px;}
+.ft-action .as{font-size:13px;font-weight:500;color:#fff;margin-bottom:22px;line-height:1.6;}
+.ft-action .act-btns{display:flex;flex-direction:column;gap:12px;align-items:center;}
+.ft-action .push-sub{font-size:11px;font-weight:500;color:var(--gray);margin-top:12px;line-height:1.55;}
+.ft-action .push-sub span{color:var(--or);}
+
+/* Contact — blanc */
+.ft-contact{font-size:12px;font-weight:500;color:#fff;margin:0 auto 32px;max-width:440px;line-height:1.7;}
+.ft-contact a{color:#fff;text-decoration:none;font-weight:600;}
+.ft-contact a:hover{color:var(--or);}
+
+/* QR — bien espacé */
+.ft-qr{
+  max-width:480px;margin:0 auto 36px;
+  display:flex;align-items:center;
+  gap:clamp(16px,4vw,32px);
+  background:var(--dark);border:1px solid var(--brd);border-radius:12px;
+  padding:clamp(18px,3vw,28px);text-align:left;
+}
+@media(max-width:480px){.ft-qr{flex-direction:column;text-align:center;gap:20px;}}
+.qr-wrap{background:#fff;padding:12px;border-radius:9px;flex-shrink:0;}
+.ft-qr .qr-t{flex:1;}
+.ft-qr .qr-t h3{font-size:13px;font-weight:700;color:#fff;margin-bottom:8px;}
+.ft-qr .qr-t p{font-size:12px;color:var(--gray);line-height:1.75;font-weight:400;}
+.ft-qr .qr-t strong{color:var(--cream);}
+.ft-copy{font-size:10px;letter-spacing:1px;color:#2e2820;margin-top:8px;}
+
+/* Desktop */
+@media(min-width:780px){
+  .site-header{padding:60px 0 56px;}
+  .site-main{padding:0 24px 60px;}
+  .site-footer{padding:68px 24px 52px;}
+  .h-logo img{width:min(85vw,560px);max-width:560px;}
+  .ft-logo img{width:min(80vw,480px);max-width:480px;}
+  .illus-wrap{height:320px;}
+  :root{--gap:16px;}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER — fond noir -->
+<header class="site-header">
+  <div class="h-logo">
+    <!-- Logo PNG blanc O Menu — fond transparent, affiché sur noir -->
+    <img src="logo-blanc.png" alt="O Menu Restaurant Brazzaville">
+  </div>
+  <p class="h-tag">✦ Cuisine Afro-Urbaine · Brazzaville ✦</p>
+  <div class="h-sep"></div>
+  <p class="h-intro">
+    Bienvenue là où <strong>la cuisine africaine rencontre l'âme urbaine.</strong><br>
+    Chez O Menu, vous n'êtes pas un simple client — <strong>vous êtes le Boss.</strong><br>
+    Chaque plat préparé avec amour, chaque saveur pour vous emporter dans un voyage culinaire unique.
+  </p>
+  <div class="h-cta">
+    <button class="btn-cmd" onclick="openCart();track('click_commander',{event_label:'header'});">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 001.98 1.61h9.72a2 2 0 001.98-1.61L23 6H6"/></svg>
+      Commandez ici
+    </button>
+    <a href="#" class="btn-wa"
+       onclick="event.preventDefault();track('click_whatsapp',{event_label:'header'});openWA('Bonjour O Menu Restaurant Brazzaville, je souhaite avoir des informations.');">
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Nous contacter sur WhatsApp
+    </a>
+  </div>
+  <p class="cta-push">Commandez maintenant et profitez de <span>nos offres &amp; réductions !</span></p>
+</header>
+
+<!-- ILLUSTRATION 1 — yeux et expressions bien visibles (object-position 15%) -->
+<div class="illus-wrap">
+  <img src="img-amis.jpg" alt="Partagez des moments inoubliables chez O Menu Brazzaville">
+  <div class="illus-caption">Chez O Menu — <span>On partage, on sourit, on vit !</span></div>
+</div>
+
+<!-- NAV -->
+<nav class="site-nav" id="sitenav">
+  <a href="#incontournables" class="nav-link">Incontournables</a>
+  <a href="#promos"          class="nav-link">Promos</a>
+  <a href="#afro"            class="nav-link">O Menu Afro</a>
+  <a href="#pizzas"          class="nav-link">Pizzas</a>
+  <a href="#burgers"         class="nav-link">Burgers</a>
+  <a href="#spaghetti"       class="nav-link">Spaghetti</a>
+  <a href="#sandwich"        class="nav-link">Sandwich</a>
+  <a href="#boissons"        class="nav-link">Boissons</a>
+  <a href="#pack"            class="nav-link">Pack</a>
+</nav>
+
+<!-- MAIN -->
+<main class="site-main">
+
+<!-- INCONTOURNABLES -->
+<section class="menu-section" id="incontournables">
+  <div class="sec-hd">
+    <div class="sec-hd-row">
+      <div class="dot"></div>
+      <h2>Nos Incontournables</h2>
+      <div class="ln"></div>
+    </div>
+    <span class="sec-sub">Les plus commandés par nos clients</span>
+  </div>
+
+  <div class="inco-grid">
+
+    <!-- POULET MAYO -->
+    <div class="inco-group"><div class="ig-dot"></div><span class="ig-title">Poulet Mayo O Menu — Le Vrai</span><div class="ig-line"></div></div>
+
+    <div class="ic">
+      <span class="ic-badge">Sans accompagnement</span>
+      <div class="ic-name">Poulet Mayo</div>
+      <div class="ic-desc">Le vrai poulet mayo O Menu — tendre, savoureux, notre recette signature depuis le premier jour.</div>
+      <div class="ic-price">3 000 CFA</div>
+    </div>
+
+    <div class="ic">
+      <span class="ic-badge">Avec accompagnement</span>
+      <div class="ic-name">Poulet Mayo Signature</div>
+      <div class="ic-desc">Accompagné de votre choix — le duo parfait pour un repas complet qui régale !</div>
+      <div class="ic-price">4 500 CFA</div>
+    </div>
+
+    <div class="ic full">
+      <span class="ic-badge">Formule Complète — Accompagnement inclus</span>
+      <div class="ic-name">Poulet Mayo Spécial</div>
+      <div class="ic-desc">La formule complète qui régale. Pour les grandes faims et les repas en famille !</div>
+      <div class="ic-price">8 500 CFA</div>
+    </div>
+
+    <!-- GRILLADES -->
+    <div class="inco-group"><div class="ig-dot"></div><span class="ig-title">Grillades O Menu</span><div class="ig-line"></div></div>
+
+    <div class="ic">
+      <span class="ic-badge">Grillé à la perfection</span>
+      <div class="ic-name">Ailes braisées</div>
+      <div class="ic-desc">Dorées, juteuses, bien épicées — nos ailes braisées font l'unanimité. Idéal avec un accompagnement !</div>
+      <div class="ic-price">2 500 CFA</div>
+    </div>
+
+    <div class="ic">
+      <span class="ic-badge">Grillé à la perfection</span>
+      <div class="ic-name">Cuisse braisée</div>
+      <div class="ic-desc">Tendre, généreuse et bien assaisonnée — la cuisse comme on l'aime. Accompagnement recommandé !</div>
+      <div class="ic-price">2 500 CFA</div>
+    </div>
+
+    <!-- TACOS -->
+    <div class="inco-group"><div class="ig-dot"></div><span class="ig-title">Tacos — Viande ou Poulet</span><div class="ig-line"></div></div>
+
+    <div class="ic"><span class="ic-badge">Taille S</span><div class="ic-name">Tacos S</div><div class="ic-price">3 500 CFA</div></div>
+    <div class="ic"><span class="ic-badge">Taille M</span><div class="ic-name">Tacos M</div><div class="ic-price">5 000 CFA</div></div>
+    <div class="ic"><span class="ic-badge">Taille L</span><div class="ic-name">Tacos L</div><div class="ic-price">8 000 CFA</div></div>
+    <div class="ic"><span class="ic-badge">XXL — 1 Kilo</span><div class="ic-name">Tacos Extrême</div><div class="ic-desc">Pour les vrais appétits — 1 kilo de bonheur !</div><div class="ic-price">12 000 CFA</div></div>
+    <div class="ic combo full"><span class="ic-badge">Combo</span><div class="ic-name">Combo Tacos — Frites + Jus</div><div class="ic-price">6 000 CFA</div></div>
+
+    <!-- CHAWARMA -->
+    <div class="inco-group"><div class="ig-dot"></div><span class="ig-title">Chawarma O Menu</span><div class="ig-line"></div></div>
+
+    <div class="ic"><span class="ic-badge">Poulet · Taille M</span><div class="ic-name">Chawarma Poulet M</div><div class="ic-price">2 000 CFA</div></div>
+    <div class="ic"><span class="ic-badge">Poulet · Taille L</span><div class="ic-name">Chawarma Poulet L</div><div class="ic-price">3 000 CFA</div></div>
+    <div class="ic"><span class="ic-badge">Poulet · Taille XL</span><div class="ic-name">Chawarma Poulet XL</div><div class="ic-price">5 000 CFA</div></div>
+    <div class="ic"><span class="ic-badge">Viande · Taille M</span><div class="ic-name">Chawarma Viande M</div><div class="ic-price">2 500 CFA</div></div>
+    <div class="ic"><span class="ic-badge">Viande · Taille L</span><div class="ic-name">Chawarma Viande L</div><div class="ic-price">3 500 CFA</div></div>
+    <div class="ic"><span class="ic-badge">Viande · Taille XL</span><div class="ic-name">Chawarma Viande XL</div><div class="ic-price">6 000 CFA</div></div>
+
+    <div class="ic full">
+      <span class="ic-badge">Exclusivité O Menu</span>
+      <div class="ic-name">Chawarma O Menu — Garniture Signature</div>
+      <div class="ic-desc">Notre chawarma exclusif avec garniture signature O Menu — une explosion de saveurs uniques que vous ne trouverez nulle part ailleurs !</div>
+      <div class="ic-price">4 000 CFA</div>
+    </div>
+
+    <div class="ic combo full"><span class="ic-badge">Combo</span><div class="ic-name">Combo Chawarma — Frites + Sauce + Jus</div><div class="ic-price">5 000 CFA</div></div>
+
+    <!-- PIZZAS VEDETTES -->
+    <div class="inco-group"><div class="ig-dot"></div><span class="ig-title">Pizzas les plus demandées</span><div class="ig-line"></div></div>
+
+    <div class="ic"><span class="ic-badge">Signature</span><div class="ic-name">Pizza au Poulet</div><div class="ic-desc">Sauce tomate, poulet, oignon, mozzarella, herbe de province, poivron vert</div><div class="ic-price">5 000 CFA</div></div>
+    <div class="ic"><span class="ic-badge">Signature</span><div class="ic-name">Pizza Américaine</div><div class="ic-desc">Sauce tomate, viande hachée, poivron vert, mozzarella</div><div class="ic-price">5 000 CFA</div></div>
+    <div class="ic"><span class="ic-badge">Signature</span><div class="ic-name">Pizza O Menu Blanche</div><div class="ic-desc">Crème fraîche, poulet, herbe de province, basilic, mozzarella</div><div class="ic-price">8 000 CFA</div></div>
+    <div class="ic"><span class="ic-badge">A partager</span><div class="ic-name">O Menu Magistrale</div><div class="ic-desc">Pizza géante — composition au choix, en famille ou entre amis</div><div class="ic-price">12 000 CFA</div></div>
+
+  </div>
+</section>
+
+<!-- PROMOS -->
+<section class="menu-section" id="promos">
+  <div class="sec-hd">
+    <div class="sec-hd-row"><div class="dot"></div><h2>Offres et Promotions</h2><div class="ln"></div></div>
+  </div>
+  <div class="promo-grid">
+    <div class="promo-card">
+      <div class="p-days">Vendredi · Samedi · Dimanche</div>
+      <div class="p-title">1 Pizza achetée = La 2ème offerte</div>
+      <div class="p-desc">Valable sur toutes nos pizzas — profitez du week-end en famille ou entre amis !</div>
+    </div>
+    <div class="promo-card">
+      <div class="p-days">Mardi et Jeudi</div>
+      <div class="p-title">Tacos Day</div>
+      <div class="p-desc">1 Tacos acheté = 1 Jus offert<br>2 Tacos achetés = Le 3ème offert</div>
+    </div>
+    <div class="promo-card full fid-card">
+      <div class="fid-icon">🏆</div>
+      <div class="fid-title">Carte de Fidélité O Menu</div>
+      <div class="fid-desc">
+        <strong>9 commandes effectuées = Le 10ème plat offert !</strong><br><br>
+        Plus vous commandez, plus vous gagnez. Nos clients fidèles bénéficient de réductions exclusives, de cadeaux et de surprises à chaque commande.<br><br>
+        Tickets restaurants mensuels à des prix imbattables — idéal pour les travailleurs et les familles. De nombreux bonus vous attendent !
+      </div>
+    </div>
+    <div class="promo-card full fid-card" style="margin-top:0;background:linear-gradient(135deg,#0a0f18 0%,#0f1a20 100%);border:1px solid rgba(37,211,102,.2);">
+      <div class="fid-icon">🎫</div>
+      <div class="fid-title">Tickets Restaurants Mensuels</div>
+      <div class="fid-desc">
+        <strong>Pour les entreprises, les travailleurs et les familles.</strong><br><br>
+        Obtenez vos tickets restaurants mensuels à des prix imbattables. Mangez bien tous les jours sans vous ruiner.<br><br>
+        Profitez de nombreux bonus exclusifs réservés aux détenteurs de tickets.<br><br>
+        <strong style="color:var(--green)">Contactez-nous pour connaître les formules et tarifs disponibles !</strong>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ILLUSTRATION 2 — pleine largeur -->
+<div class="illus-wrap" style="margin-top:52px;margin-left:-16px;margin-right:-16px;width:calc(100% + 32px);">
+  <img src="img-pizza.jpg" alt="La meilleure pizza de Brazzaville — O Menu Restaurant" style="object-position:center 40%;">
+  <div class="illus-caption"><span>Le Goût.</span> Le Sourire. Le Moment.</div>
+</div>
+
+<!-- O MENU AFRO -->
+<section class="menu-section" id="afro">
+  <div class="sec-hd">
+    <div class="sec-hd-row"><div class="dot"></div><h2>O Menu Afro Spécial</h2><div class="ln"></div></div>
+    <span class="sec-sub">Nos Spécialités Signature — Le vrai goût de chez nous</span>
+  </div>
+  <div class="grid">
+    <div class="card sig"><span class="bdg or">Signature</span><div class="nm">Porc Braisé O Menu</div><div class="ds">Notre porc braisé façon maison, doré à la perfection — un incontournable de la maison.</div><div class="pr">5 000 CFA</div></div>
+    <div class="card sig"><span class="bdg or">Pièce Maîtresse</span><div class="nm">Mouton façon O Menu</div><div class="ds">Notre plat emblématique — saveur incomparable, recette jalousement gardée.</div><div class="pr">8 000 CFA</div></div>
+  </div>
+  <p class="sub-lbl white" style="margin-top:28px">Africa Food Experience</p>
+  <p style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gray);font-weight:600;margin-bottom:14px;">Des saveurs qui traversent tout le continent</p>
+  <div class="grid">
+    <div class="card"><div class="nm">Poulet DG</div><div class="pr">5 000 CFA</div></div>
+    <div class="card"><div class="nm">Thieb poulet / viande</div><div class="pr">5 000 CFA</div></div>
+    <div class="card"><div class="nm">Maffé poulet / viande</div><div class="pr">4 500 CFA</div></div>
+    <div class="card"><div class="nm">Poisson salé aux aubergines</div><div class="pr">4 500 CFA</div></div>
+    <div class="card"><div class="nm">Riz Cantonné</div><div class="pr">4 000 CFA</div></div>
+    <div class="card"><div class="nm">Brochette de poulet</div><div class="pr">4 500 CFA</div></div>
+  </div>
+</section>
+
+<!-- PIZZAS -->
+<section class="menu-section" id="pizzas">
+  <div class="sec-hd">
+    <div class="sec-hd-row"><div class="dot"></div><h2>Pizzas</h2><div class="ln"></div></div>
+  </div>
+  <div class="grid">
+    <div class="card"><div class="nm">Pizza Margherita</div><div class="ds">Sauce tomate, basilic frais, fromage mozzarella, olive noir</div><div class="pr">2 500 CFA</div></div>
+    <div class="card"><div class="nm">Pizza Végétarienne</div><div class="ds">Carotte, haricot vert, sauce tomate, olive noir</div><div class="pr">3 500 CFA</div></div>
+    <div class="card"><div class="nm">Pizza Napolitaine</div><div class="ds">Sauce tomate, anchois, fromage, mozzarella, origan</div><div class="pr">4 500 CFA</div></div>
+    <div class="card"><div class="nm">Pizza Jambon</div><div class="ds">Sauce tomate, jambon, fromage mozzarella, origan, olive noir</div><div class="pr">6 000 CFA</div></div>
+    <div class="card"><div class="nm">Pizza Chorizo</div><div class="ds">Sauce tomate, chorizo, mozzarella, herbe de province</div><div class="pr">8 000 CFA</div></div>
+    <div class="card"><div class="nm">Pizza O Menu G</div><div class="ds">La garniture entièrement au choix du client</div><div class="pr">10 000 CFA</div></div>
+  </div>
+</section>
+
+<!-- BURGERS -->
+<section class="menu-section" id="burgers">
+  <div class="sec-hd">
+    <div class="sec-hd-row"><div class="dot"></div><h2>Burgers</h2><div class="ln"></div></div>
+  </div>
+  <div class="grid">
+    <div class="card"><div class="nm">Classic Cheese Burger</div><div class="pr">3 500 CFA</div></div>
+    <div class="card"><div class="nm">Royal Burger</div><div class="pr">4 000 CFA</div></div>
+    <div class="card"><div class="nm">Bacon Burger</div><div class="pr">5 000 CFA</div></div>
+    <div class="card"><div class="nm">Burger Double Cheese + Frites</div><div class="pr">6 000 CFA</div></div>
+    <div class="card sig"><span class="bdg or">Signature</span><div class="nm">Burger Ubuntu</div><div class="ds">Le plus généreux — garniture XXL façon O Menu. Pour les vrais Boss !</div><div class="pr">8 000 CFA</div></div>
+    <div class="card wide"><span class="bdg hot">Combo</span><div class="nm">Combo Burger O Menu — Burger + Frites + Sauce + Jus</div><div class="pr">5 000 CFA</div></div>
+  </div>
+</section>
+
+<!-- SPAGHETTI -->
+<section class="menu-section" id="spaghetti">
+  <div class="sec-hd">
+    <div class="sec-hd-row"><div class="dot"></div><h2>Spaghetti</h2><div class="ln"></div></div>
+  </div>
+  <div class="grid">
+    <div class="card"><div class="nm">Spaghetti Napolitaine</div><div class="pr">2 500 CFA</div></div>
+    <div class="card"><div class="nm">Spaghetti au poulet effiloché</div><div class="pr">2 500 CFA</div></div>
+    <div class="card"><div class="nm">Spaghetti à la viande hachée</div><div class="pr">3 500 CFA</div></div>
+    <div class="card"><div class="nm">Spaghetti Carbonara</div><div class="pr">5 000 CFA</div></div>
+    <div class="card wide"><span class="bdg or">Incontournable</span><div class="nm">Spaghetti Bolognaise</div><div class="pr">5 000 CFA</div></div>
+  </div>
+</section>
+
+<!-- SANDWICH -->
+<section class="menu-section" id="sandwich">
+  <div class="sec-hd">
+    <div class="sec-hd-row"><div class="dot"></div><h2>Sandwich</h2><div class="ln"></div></div>
+  </div>
+  <div class="grid">
+    <div class="card"><div class="nm">Sandwich au poulet</div><div class="pr">1 000 / 2 000 CFA</div></div>
+    <div class="card"><div class="nm">Pain Viande Hachée O Menu</div><div class="pr">1 000 / 2 000 CFA</div></div>
+  </div>
+</section>
+
+<!-- ACCOMPAGNEMENTS & BOISSONS -->
+<section class="menu-section" id="boissons">
+  <div class="sec-hd">
+    <div class="sec-hd-row">
+      <div class="dot"></div>
+      <h2>Accompagnements<br>&amp; Boissons</h2>
+      <div class="ln"></div>
+    </div>
+  </div>
+  <p class="sub-lbl gray">Accompagnements</p>
+  <div class="slist">
+    <div class="srow"><span class="nm">Riz / Manioc / Bananes</span><span class="pr">1 000 CFA</span></div>
+    <div class="srow"><span class="nm">Saka-Saka</span><span class="pr">2 000 / 4 000 CFA</span></div>
+    <div class="srow"><span class="nm">Légumes</span><span class="pr">1 500 / 3 000 CFA</span></div>
+  </div>
+  <p class="sub-lbl gray" style="margin-top:20px">Boissons</p>
+  <div class="slist">
+    <div class="srow"><span class="nm">Jus</span><span class="pr">500 / 1 000 CFA</span></div>
+    <div class="srow"><span class="nm">Yaourt</span><span class="pr">1 000 CFA</span></div>
+    <div class="srow"><span class="nm">Eau</span><span class="pr">500 / 1 000 CFA</span></div>
+    <div class="srow"><span class="nm">Bières</span><span class="pr">1 000 / 1 500 / 2 000 CFA</span></div>
+  </div>
+</section>
+
+<!-- PACK TRAVAILLEURS -->
+<section class="menu-section" id="pack">
+  <div class="sec-hd">
+    <div class="sec-hd-row"><div class="dot"></div><h2>Pack Spécial<br><span style="font-size:15px;letter-spacing:1px;">Travailleurs</span></h2><div class="ln"></div></div>
+    <span class="sec-sub">Rapide · Bon · Accessible</span>
+  </div>
+  <div class="grid">
+    <div class="card"><div class="nm">Pack Essentiel</div><div class="ds">Rapide et savoureux pour votre pause déjeuner</div><div class="pr">1 500 CFA</div></div>
+    <div class="card"><div class="nm">Pack Midi</div><div class="ds">Le bon repas du midi, complet et bien dosé</div><div class="pr">2 500 CFA</div></div>
+    <div class="card wide"><span class="bdg hot">Meilleure valeur</span><div class="nm">Pack Complet</div><div class="ds">Le repas qui vous ressource pour toute l'après-midi</div><div class="pr">3 500 CFA</div></div>
+  </div>
+</section>
+
+</main>
+
+<!-- ZONE CTA — juste après le pack, avant le footer -->
+<div class="cta-zone">
+  <div class="cz-inner">
+    <div class="cz-title">Passez votre commande maintenant</div>
+    <div class="cz-sub">Livraison rapide · À emporter · Sur place<br>On s'occupe de vous immédiatement !</div>
+    <div class="cz-btns">
+      <button class="btn-cmd" style="max-width:300px;" onclick="openCart();track('click_commander',{event_label:'cta_zone'});">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 001.98 1.61h9.72a2 2 0 001.98-1.61L23 6H6"/></svg>
+        Commandez ici
+      </button>
+      <a href="#" class="btn-wa" style="max-width:300px;"
+         onclick="event.preventDefault();track('click_whatsapp',{event_label:'cta_zone'});openWA('Bonjour O Menu Restaurant Brazzaville, je souhaite avoir des informations sur votre menu.');">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Nous contacter sur WhatsApp
+      </a>
+    </div>
+    <p class="cz-push">Commandez et profitez de <span>nos offres et réductions en cours !</span></p>
+  </div>
+</div>
+
+<!-- FOOTER — fond noir -->
+<footer class="site-footer">
+<div class="ft-inner">
+
+  <div class="ft-logo">
+    <!-- Logo PNG blanc dans le footer — agrandi, bien visible -->
+    <img src="logo-blanc.png" alt="O Menu Restaurant Brazzaville">
+  </div>
+  <p class="ft-sub">Cuisine Afro-Urbaine · Brazzaville</p>
+  <div class="ft-sep"></div>
+
+  <div class="ft-vision">
+    <!-- Le Goût. Le Sourire. Le Moment. — signature émotionnelle d'O Menu : tout en blanc -->
+    <div class="ft-s1">Le Goût. Le Sourire. Le Moment.</div>
+    <div class="ft-s2">✦ Le voyage culinaire parfait ! ✦</div>
+    <p class="ft-vp">O Menu est né de la volonté de mettre le client au centre de tout notre service. Et chez nous, on dit : c'est vous le Boss. Tout est pensé pour votre satisfaction.</p>
+    <p class="ft-vp">Nous faisons tout pour vous offrir un voyage culinaire parfait dans vos assiettes — des épices authentiques, des textures généreuses, des recettes qui parlent à l'âme. Alors n'attendez plus.</p>
+    <p class="ft-vp2">Chez nous, on ne mange pas seulement. On partage, on sourit, on vit des instants qui restent gravés dans les mémoires. C'est ça, l'expérience O Menu.</p>
+  </div>
+
+  <div class="ft-info">
+    <div class="ft-col">
+      <span class="ci-icon">📍</span>
+      <span class="ct">Notre Adresse</span>
+      <p>
+        Avenue Sergent Malamine<br>Centre-Ville de Brazzaville
+        <span class="ref">En diagonale de l'Hôtel Vital<br>(ex-Restaurant Alwady)</span>
+      </p>
+    </div>
+    <div class="ft-col">
+      <span class="ci-icon">🕐</span>
+      <span class="ct">Horaires</span>
+      <p>
+        <strong style="color:var(--or)">Mardi – Samedi</strong><br>11h00 à 21h00<br><br>
+        <strong style="color:var(--or)">Dimanche</strong><br>12h30 à 21h00<br><br>
+        <strong style="color:#fff">Lundi</strong> — Fermé
+      </p>
+    </div>
+    <div class="ft-col">
+      <span class="ci-icon">🛵</span>
+      <span class="ct">Livraison Rapide</span>
+      <p>
+        Livraison rapide à des prix imbattables !<br><br>
+        Prix selon votre zone — livré directement chez vous.<br><br>
+        Profitez de nos offres et réductions !
+      </p>
+      <!-- Badge livraison supprimé comme demandé -->
+    </div>
+  </div>
+
+  <div class="ft-socials">
+    <a href="https://www.tiktok.com/@omenurestaurant_brazza?_r=1&_t=ZS-95IeVlWUfUz" class="ft-soc" target="_blank" rel="noopener" onclick="track('click_social',{event_label:'tiktok'});">
+      <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V9.15a8.16 8.16 0 004.77 1.52V7.22a4.85 4.85 0 01-1-.53z"/></svg>
+      TikTok
+    </a>
+    <a href="https://www.instagram.com/omenu_restaurant_brazza?igsh=OHBqdDE2MnpkeHll" class="ft-soc" target="_blank" rel="noopener" onclick="track('click_social',{event_label:'instagram'});">
+      <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+      Instagram
+    </a>
+    <a href="https://www.facebook.com/share/1Dq4wWBX7h/" class="ft-soc" target="_blank" rel="noopener" onclick="track('click_social',{event_label:'facebook'});">
+      <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+      Facebook
+    </a>
+  </div>
+
+  <!-- Correspondance — blanc -->
+  <p class="ft-contact">
+    Pour toute correspondance, partenariat ou besoin spécifique :<br>
+    <a href="mailto:chezomenu@gmail.com">chezomenu@gmail.com</a> &nbsp;·&nbsp; <a href="tel:+242067737037">+242 06 77 37 037</a>
+  </p>
+
+  <!-- QR — bien espacé desktop et mobile -->
+  <div class="ft-qr">
+    <div class="qr-wrap"><div id="qrcode"></div></div>
+    <div class="qr-t">
+      <h3>Partagez notre menu à vos proches</h3>
+      <p>Scannez ce QR code et envoyez-le à votre famille et vos amis.<br><strong>Ils accèdent directement au menu</strong> et peuvent commander en un clic.<br><br><span style="color:var(--or);font-size:11px;font-weight:600">Partagez. Recommandez. Régalez !</span></p>
+    </div>
+  </div>
+
+  <div class="ft-copy">© 2025 O Menu Restaurant Brazzaville — Tous droits réservés</div>
+</div>
+</footer>
+
+<!-- FAB -->
+<button class="cart-fab" onclick="openCart();track('click_commander',{event_label:'fab'});" aria-label="Commander">
+  <span class="fab-icon">🛒</span>
+  <span class="fab-label">Commander</span>
+  <span class="cart-count" id="cart-count">0</span>
+</button>
+
+<!-- MODAL COMMANDE -->
+<div class="modal-overlay" id="cart-modal" onclick="closeOut(event)">
+<div class="modal-box">
+  <div class="modal-hd">
+    <div>
+      <h3>Votre Commande</h3>
+      <p class="msub">Remplissez tous les champs — votre commande part directement sur WhatsApp !</p>
+    </div>
+    <button class="modal-close" onclick="closeCart()">✕</button>
+  </div>
+  <div class="push-box">Offre en cours ! <span>Livraison à partir de 1 000 CFA. Profitez de nos promos du moment !</span></div>
+
+  <div class="cart-form">
+
+    <!-- PLAT -->
+    <div>
+      <span class="c-lbl">Choisir un plat <span class="req">*</span></span>
+      <select class="c-sel" id="dish-select">
+        <option value="" data-price="0">Quel plat vous fait envie ?</option>
+        <optgroup label="Incontournables — Poulet Mayo">
+          <option value="Poulet Mayo (sans accompagnement)" data-price="3000">Poulet Mayo sans accompagnement — 3 000 CFA</option>
+          <option value="Poulet Mayo Signature (avec accompagnement)" data-price="4500">Poulet Mayo Signature avec accompagnement — 4 500 CFA</option>
+          <option value="Poulet Mayo Spécial complet" data-price="8500">Poulet Mayo Spécial complet — 8 500 CFA</option>
+        </optgroup>
+        <optgroup label="Incontournables — Grillades">
+          <option value="Ailes braisées" data-price="2500">Ailes braisées — 2 500 CFA</option>
+          <option value="Cuisse braisée" data-price="2500">Cuisse braisée — 2 500 CFA</option>
+        </optgroup>
+        <optgroup label="Incontournables — Tacos">
+          <option value="Tacos S" data-price="3500">Tacos S — 3 500 CFA</option>
+          <option value="Tacos M" data-price="5000">Tacos M — 5 000 CFA</option>
+          <option value="Tacos L" data-price="8000">Tacos L — 8 000 CFA</option>
+          <option value="Tacos Extrême (1 Kilo)" data-price="12000">Tacos Extrême 1 Kilo — 12 000 CFA</option>
+          <option value="Combo Tacos (Frites et Jus)" data-price="6000">Combo Tacos Frites et Jus — 6 000 CFA</option>
+        </optgroup>
+        <optgroup label="Incontournables — Chawarma">
+          <option value="Chawarma Poulet Taille M" data-price="2000">Chawarma Poulet Taille M — 2 000 CFA</option>
+          <option value="Chawarma Poulet Taille L" data-price="3000">Chawarma Poulet Taille L — 3 000 CFA</option>
+          <option value="Chawarma Poulet Taille XL" data-price="5000">Chawarma Poulet Taille XL — 5 000 CFA</option>
+          <option value="Chawarma Viande Taille M" data-price="2500">Chawarma Viande Taille M — 2 500 CFA</option>
+          <option value="Chawarma Viande Taille L" data-price="3500">Chawarma Viande Taille L — 3 500 CFA</option>
+          <option value="Chawarma Viande Taille XL" data-price="6000">Chawarma Viande Taille XL — 6 000 CFA</option>
+          <option value="Chawarma O Menu Garniture Signature" data-price="4000">Chawarma O Menu Garniture Signature — 4 000 CFA</option>
+          <option value="Combo Chawarma (Frites, Sauce et Jus)" data-price="5000">Combo Chawarma Frites Sauce et Jus — 5 000 CFA</option>
+        </optgroup>
+        <optgroup label="Incontournables — Pizzas Signature">
+          <option value="Pizza au Poulet" data-price="5000">Pizza au Poulet — 5 000 CFA</option>
+          <option value="Pizza Américaine" data-price="5000">Pizza Américaine — 5 000 CFA</option>
+          <option value="Pizza O Menu Blanche" data-price="8000">Pizza O Menu Blanche — 8 000 CFA</option>
+          <option value="O Menu Magistrale" data-price="12000">O Menu Magistrale géante — 12 000 CFA</option>
+        </optgroup>
+        <optgroup label="O Menu Afro et Africa Food">
+          <option value="Porc Braisé O Menu" data-price="5000">Porc Braisé O Menu — 5 000 CFA</option>
+          <option value="Mouton façon O Menu" data-price="8000">Mouton façon O Menu — 8 000 CFA</option>
+          <option value="Poulet DG" data-price="5000">Poulet DG — 5 000 CFA</option>
+          <option value="Thieb poulet ou viande" data-price="5000">Thieb poulet ou viande — 5 000 CFA</option>
+          <option value="Maffé poulet ou viande" data-price="4500">Maffé poulet ou viande — 4 500 CFA</option>
+          <option value="Poisson salé aux aubergines" data-price="4500">Poisson salé aux aubergines — 4 500 CFA</option>
+          <option value="Riz Cantonné" data-price="4000">Riz Cantonné — 4 000 CFA</option>
+          <option value="Brochette de poulet" data-price="4500">Brochette de poulet — 4 500 CFA</option>
+        </optgroup>
+        <optgroup label="Pizzas">
+          <option value="Pizza Margherita" data-price="2500">Pizza Margherita — 2 500 CFA</option>
+          <option value="Pizza Végétarienne" data-price="3500">Pizza Végétarienne — 3 500 CFA</option>
+          <option value="Pizza Napolitaine" data-price="4500">Pizza Napolitaine — 4 500 CFA</option>
+          <option value="Pizza Jambon" data-price="6000">Pizza Jambon — 6 000 CFA</option>
+          <option value="Pizza Chorizo" data-price="8000">Pizza Chorizo — 8 000 CFA</option>
+          <option value="Pizza O Menu G (garniture au choix)" data-price="10000">Pizza O Menu G garniture au choix — 10 000 CFA</option>
+        </optgroup>
+        <optgroup label="Burgers">
+          <option value="Classic Cheese Burger" data-price="3500">Classic Cheese Burger — 3 500 CFA</option>
+          <option value="Royal Burger" data-price="4000">Royal Burger — 4 000 CFA</option>
+          <option value="Bacon Burger" data-price="5000">Bacon Burger — 5 000 CFA</option>
+          <option value="Burger Double Cheese avec Frites" data-price="6000">Burger Double Cheese avec Frites — 6 000 CFA</option>
+          <option value="Burger Ubuntu" data-price="8000">Burger Ubuntu — 8 000 CFA</option>
+          <option value="Combo Burger O Menu" data-price="5000">Combo Burger O Menu — 5 000 CFA</option>
+        </optgroup>
+        <optgroup label="Spaghetti">
+          <option value="Spaghetti Napolitaine" data-price="2500">Spaghetti Napolitaine — 2 500 CFA</option>
+          <option value="Spaghetti au poulet effiloché" data-price="2500">Spaghetti au poulet effiloché — 2 500 CFA</option>
+          <option value="Spaghetti à la viande hachée" data-price="3500">Spaghetti à la viande hachée — 3 500 CFA</option>
+          <option value="Spaghetti Carbonara" data-price="5000">Spaghetti Carbonara — 5 000 CFA</option>
+          <option value="Spaghetti Bolognaise" data-price="5000">Spaghetti Bolognaise — 5 000 CFA</option>
+        </optgroup>
+        <optgroup label="Sandwich">
+          <option value="Sandwich au poulet petit" data-price="1000">Sandwich au poulet petit — 1 000 CFA</option>
+          <option value="Sandwich au poulet grand" data-price="2000">Sandwich au poulet grand — 2 000 CFA</option>
+          <option value="Pain Viande Hachée O Menu petit" data-price="1000">Pain Viande Hachée O Menu petit — 1 000 CFA</option>
+          <option value="Pain Viande Hachée O Menu grand" data-price="2000">Pain Viande Hachée O Menu grand — 2 000 CFA</option>
+        </optgroup>
+        <optgroup label="Pack Travailleurs">
+          <option value="Pack Essentiel" data-price="1500">Pack Essentiel — 1 500 CFA</option>
+          <option value="Pack Midi" data-price="2500">Pack Midi — 2 500 CFA</option>
+          <option value="Pack Complet" data-price="3500">Pack Complet — 3 500 CFA</option>
+        </optgroup>
+      </select>
+      <p class="err-msg" id="err-dish">Veuillez choisir un plat avant d'ajouter.</p>
+    </div>
+
+    <!-- QUANTITÉ -->
+    <div>
+      <span class="c-lbl">Quantité</span>
+      <div class="qty-row">
+        <button class="qty-btn" onclick="chQty(-1)">−</button>
+        <span class="qty-val" id="qty-val">1</span>
+        <button class="qty-btn" onclick="chQty(1)">+</button>
+        <button class="add-btn" onclick="addItem()">Ajouter au panier</button>
+      </div>
+    </div>
+
+    <!-- LISTE COMMANDE -->
+    <div>
+      <span class="c-lbl">Votre commande</span>
+      <div class="c-items" id="cart-items">
+        <div class="empty-msg">Votre panier est vide — choisissez un plat ci-dessus</div>
+      </div>
+      <div class="c-total" id="c-total" style="display:none">
+        Sous-total : <span id="sub-total">0</span> CFA
+        <span class="li" id="livr-info"></span>
+        <span class="tot" id="total-line"></span>
+        <span class="red">Possible de bénéficier d'une réduction selon votre commande !</span>
+      </div>
+    </div>
+
+    <!-- MODE -->
+    <div>
+      <span class="c-lbl">Mode de commande <span class="req">*</span></span>
+      <select class="c-sel" id="mode-select" onchange="toggleDel()">
+        <option value="Livraison">Livraison à domicile</option>
+        <option value="A emporter">À emporter</option>
+        <option value="Sur place">Sur place ou Réservation</option>
+      </select>
+    </div>
+
+    <!-- CHAMPS LIVRAISON -->
+    <div id="del-fields">
+      <div style="margin-bottom:14px;">
+        <span class="c-lbl">Zone de livraison <span class="req">*</span></span>
+        <select class="c-sel" id="zone-select" onchange="calcTotal()">
+          <option value="Zone 1" data-livr="1000">Zone 1 — 1 000 CFA : Centre-ville, Ouenzé, Moungali, Plateau, OCH, Batignolles, Poto-Poto</option>
+          <option value="Zone 2" data-livr="1500">Zone 2 — 1 500 CFA : La Base, Comus, Talangaï, Bacongo, Makélékélé, Mfilou, Mpila</option>
+          <option value="Zone 3" data-livr="2000">Zone 3 — 2 000 CFA : Nkombo, Casis, Le Bled, Bifouiti, Kisoundi, OMS</option>
+          <option value="Zone 4" data-livr="2500">Zone 4 — 2 500 CFA : Massengo, Congo Chine, Soprogié, Barrage, Madibou</option>
+          <option value="Zone 5" data-livr="3000">Zone 5 — 3 000 CFA : Kintélé, Manianga, Mayanga</option>
+          <option value="Autre zone" data-livr="0">Autre zone — préciser dans l'adresse</option>
+        </select>
+      </div>
+      <div style="margin-bottom:14px;">
+        <span class="c-lbl">Adresse complète <span class="req">*</span></span>
+        <input type="text" class="c-inp" id="addr-input" placeholder="Rue, quartier, point de repère précis...">
+        <p class="err-msg" id="err-addr">Veuillez indiquer votre adresse de livraison.</p>
+      </div>
+      <div style="margin-bottom:14px;">
+        <span class="c-lbl">La livraison est pour <span class="req">*</span></span>
+        <select class="c-sel" id="for-who" onchange="toggleRecip()">
+          <option value="moi">Pour moi-même</option>
+          <option value="autre">Pour quelqu'un d'autre</option>
+        </select>
+      </div>
+      <div id="recip-field" style="display:none;margin-bottom:14px;">
+        <span class="c-lbl">Nom du destinataire <span class="req">*</span></span>
+        <input type="text" class="c-inp" id="recip-name" placeholder="Nom et prénom du destinataire">
+        <p class="err-msg" id="err-recip">Veuillez indiquer le nom du destinataire.</p>
+      </div>
+    </div>
+
+    <!-- NOM -->
+    <div>
+      <span class="c-lbl">Votre nom complet <span class="req">*</span></span>
+      <input type="text" class="c-inp" id="client-name" placeholder="Votre prénom et nom">
+      <p class="err-msg" id="err-name">Veuillez indiquer votre nom.</p>
+    </div>
+
+    <!-- TÉLÉPHONE -->
+    <div>
+      <span class="c-lbl">Votre numéro de téléphone <span class="req">*</span></span>
+      <input type="tel" class="c-inp" id="client-phone" placeholder="Ex : 06 77 37 037">
+      <p class="err-msg" id="err-phone">Veuillez indiquer votre numéro de téléphone.</p>
+    </div>
+
+    <div class="push-box">
+      Encore une étape ! <span>Validez et on s'occupe de vous immédiatement. Livraison rapide et saveurs authentiques !</span>
+    </div>
+
+    <button class="submit-btn" onclick="sendWA()">
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      <span>Valider ma commande</span>
+    </button>
+  </div>
+</div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+/* ── QR Code — lien Vercel ── */
+(function(){
+  new QRCode(document.getElementById('qrcode'),{text:'https://omenubrazza.vercel.app/',width:136,height:136,colorDark:'#111010',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.H});
+})();
+
+/*
+  ── Google Sheets via Apps Script ──
+  Pour activer : créez un Google Apps Script sur votre compte nkolaguni@gmail.com
+  avec le code suivant, déployez-le en tant que Web App (accès : Tout le monde),
+  copiez l'URL de déploiement et remplacez APPS_SCRIPT_URL ci-dessous.
+
+  Code Apps Script à coller dans script.google.com :
+  ---------------------------------------------------
+  const SHEET_ID = 'VOTRE_GOOGLE_SHEET_ID';
+  function doPost(e) {
+    const data = JSON.parse(e.postData.contents);
+    const sheet = SpreadsheetApp.openById(SHEET_ID).getActiveSheet();
+    sheet.appendRow([
+      new Date(), data.nom, data.telephone, data.mode,
+      data.zone||'', data.adresse||'', data.destinataire||'',
+      data.plats, data.sous_total, data.livraison, data.total
+    ]);
+    return ContentService.createTextOutput(JSON.stringify({status:'ok'}))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+  ---------------------------------------------------
+*/
+var APPS_SCRIPT_URL = ''; /* ← Collez ici l'URL de votre Apps Script déployé */
+
+function sendToGoogleSheets(data){
+  if(!APPS_SCRIPT_URL) return; /* Pas encore configuré */
+  fetch(APPS_SCRIPT_URL,{
+    method:'POST',
+    body:JSON.stringify(data),
+    headers:{'Content-Type':'application/json'}
+  }).catch(function(err){console.warn('Google Sheets :', err);});
+}
+
+/* ── Nav active ── */
+(function(){
+  var nav=document.getElementById('sitenav');
+  var links=document.querySelectorAll('.nav-link');
+  var secs=Array.from(document.querySelectorAll('.menu-section'));
+  function tick(){
+    var navH=nav.offsetHeight,cur=secs[0].id;
+    secs.forEach(function(s){if(s.getBoundingClientRect().top-navH-8<=0)cur=s.id;});
+    links.forEach(function(l){
+      var on=l.getAttribute('href')==='#'+cur;
+      if(on&&!l.classList.contains('active')){
+        l.classList.add('active');
+        nav.scrollLeft=l.offsetLeft-(nav.offsetWidth/2)+(l.offsetWidth/2);
+      }else if(!on)l.classList.remove('active');
+    });
+  }
+  window.addEventListener('scroll',tick,{passive:true});
+  window.addEventListener('resize',tick,{passive:true});
+  tick();
+})();
+
+/* ── openWA — ouvre WhatsApp directement avec le message ── */
+function openWA(msg){
+  /* wa.me envoie directement dans WhatsApp/WhatsApp Business sans passer par la landing page web */
+  var url='https://wa.me/242067737037?text='+encodeURIComponent(msg);
+  window.open(url,'_blank','noopener');
+}
+
+/* ── Panier ── */
+var cart=[],qty=1;
+
+function openCart(){
+  document.getElementById('cart-modal').classList.add('open');
+  document.body.style.overflow='hidden';
+  track('open_cart',{event_label:'modal'});
+}
+function closeCart(){
+  document.getElementById('cart-modal').classList.remove('open');
+  document.body.style.overflow='';
+}
+function closeOut(e){if(e.target===document.getElementById('cart-modal'))closeCart();}
+function chQty(d){qty=Math.max(1,qty+d);document.getElementById('qty-val').textContent=qty;}
+
+function clearErr(id){
+  var el=document.getElementById(id);
+  if(el){el.style.display='none';}
+}
+function showErr(id){
+  var el=document.getElementById(id);
+  if(el){el.style.display='block';}
+}
+
+function addItem(){
+  var sel=document.getElementById('dish-select');
+  var name=sel.value;
+  var price=parseInt(sel.selectedOptions[0].dataset.price)||0;
+  if(!name){showErr('err-dish');return;}
+  clearErr('err-dish');
+  var ex=cart.find(function(c){return c.name===name;});
+  if(ex)ex.qty+=qty;else cart.push({name:name,price:price,qty:qty});
+  qty=1;document.getElementById('qty-val').textContent=1;sel.value='';
+  renderCart();calcTotal();
+  track('add_to_cart',{event_label:name,value:price});
+}
+function removeItem(i){cart.splice(i,1);renderCart();calcTotal();}
+
+function renderCart(){
+  var list=document.getElementById('cart-items');
+  var cc=document.getElementById('cart-count');
+  if(cart.length===0){
+    list.innerHTML='<div class="empty-msg">Votre panier est vide — choisissez un plat ci-dessus</div>';
+    cc.classList.remove('show');document.getElementById('c-total').style.display='none';return;
+  }
+  var count=0;
+  list.innerHTML=cart.map(function(item,i){
+    count+=item.qty;
+    return '<div class="ci"><span class="ci-n">'+item.name+' x '+item.qty+'</span><span class="ci-p">'+(item.price*item.qty).toLocaleString()+' CFA</span><button class="ci-rm" onclick="removeItem('+i+')">Supprimer</button></div>';
+  }).join('');
+  cc.textContent=count;cc.classList.add('show');
+  document.getElementById('c-total').style.display='block';
+}
+
+function calcTotal(){
+  var sub=cart.reduce(function(s,c){return s+c.price*c.qty;},0);
+  var mode=document.getElementById('mode-select').value;
+  var lc=0;
+  if(mode==='Livraison'){lc=parseInt(document.getElementById('zone-select').selectedOptions[0].dataset.livr)||0;}
+  document.getElementById('sub-total').textContent=sub.toLocaleString();
+  document.getElementById('livr-info').textContent=lc>0?'+ Livraison : '+lc.toLocaleString()+' CFA':'';
+  document.getElementById('total-line').textContent=lc>0?'TOTAL : '+(sub+lc).toLocaleString()+' CFA':'';
+}
+
+function toggleDel(){
+  var mode=document.getElementById('mode-select').value;
+  var df=document.getElementById('del-fields');
+  df.style.display=mode==='Livraison'?'flex':'none';
+  df.style.flexDirection='column';
+  calcTotal();
+}
+function toggleRecip(){
+  document.getElementById('recip-field').style.display=
+    document.getElementById('for-who').value==='autre'?'block':'none';
+}
+toggleDel();
+
+/* Validation complète — tous les champs obligatoires */
+function validate(){
+  var ok=true;
+
+  if(cart.length===0){
+    alert('Veuillez ajouter au moins un plat à votre commande.');
+    return false;
+  }
+
+  var cn=document.getElementById('client-name').value.trim();
+  if(!cn){showErr('err-name');ok=false;}else clearErr('err-name');
+
+  var cp=document.getElementById('client-phone').value.trim();
+  if(!cp){showErr('err-phone');ok=false;}else clearErr('err-phone');
+
+  var mode=document.getElementById('mode-select').value;
+  if(mode==='Livraison'){
+    var addr=document.getElementById('addr-input').value.trim();
+    if(!addr){showErr('err-addr');ok=false;}else clearErr('err-addr');
+
+    if(document.getElementById('for-who').value==='autre'){
+      var rn=document.getElementById('recip-name').value.trim();
+      if(!rn){showErr('err-recip');ok=false;}else clearErr('err-recip');
+    }
+  }
+  return ok;
+}
+
+/* sendWA — construit le message et ouvre WhatsApp directement */
+function sendWA(){
+  if(!validate())return;
+
+  var mode=document.getElementById('mode-select').value;
+  var cn=document.getElementById('client-name').value.trim();
+  var cp=document.getElementById('client-phone').value.trim();
+  var sub=cart.reduce(function(s,c){return s+c.price*c.qty;},0);
+  var lc=0;
+  if(mode==='Livraison'){lc=parseInt(document.getElementById('zone-select').selectedOptions[0].dataset.livr)||0;}
+  var total=sub+lc;
+
+  /* Message WhatsApp propre et direct */
+  var msg='Bonjour O Menu Restaurant Brazzaville,\n\n';
+  msg+='Je suis '+cn+' et voici ma commande :\n\n';
+  msg+='Telephone : '+cp+'\n';
+  msg+='Mode : '+mode+'\n';
+
+  if(mode==='Livraison'){
+    msg+='Zone : '+document.getElementById('zone-select').value+'\n';
+    var addr=document.getElementById('addr-input').value.trim();
+    if(addr)msg+='Adresse : '+addr+'\n';
+    if(document.getElementById('for-who').value==='autre'){
+      var rn=document.getElementById('recip-name').value.trim();
+      if(rn)msg+='Destinataire : '+rn+'\n';
+    }
+  }
+
+  msg+='\nMes plats :\n';
+  cart.forEach(function(item){
+    msg+='- '+item.name+' x '+item.qty+' = '+(item.price*item.qty).toLocaleString()+' CFA\n';
+  });
+
+  msg+='\nSous-total : '+sub.toLocaleString()+' CFA';
+  if(lc>0)msg+='\nLivraison : '+lc.toLocaleString()+' CFA';
+  msg+='\nTOTAL : '+total.toLocaleString()+' CFA';
+  msg+='\n\nMerci et à très vite !';
+
+  /* Envoi vers Google Sheets */
+  var sheetsData={
+    nom:cn, telephone:cp, mode:mode,
+    zone:mode==='Livraison'?document.getElementById('zone-select').value:'',
+    adresse:mode==='Livraison'?document.getElementById('addr-input').value.trim():'',
+    destinataire:(mode==='Livraison'&&document.getElementById('for-who').value==='autre')?document.getElementById('recip-name').value.trim():'',
+    plats:cart.map(function(c){return c.name+' x'+c.qty;}).join(' | '),
+    sous_total:sub, livraison:lc, total:total
+  };
+  sendToGoogleSheets(sheetsData);
+  track('submit_order',{event_label:'commande',value:total});
+
+  /* Ouvre WhatsApp directement */
+  openWA(msg);
+}
+</script>
+</body>
+</html>
